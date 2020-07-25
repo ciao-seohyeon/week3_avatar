@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/school_roof_background">
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="70dp"
+        android:src="@drawable/fairy"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="230dp"
