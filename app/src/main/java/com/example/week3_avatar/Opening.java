@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,12 +42,11 @@ public class Opening extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.nextButton) {
+        if ((view.getId() == R.id.nextButton) && (section == 0)) {
             textView.setAnimatedText("혹시 너의 컴플렉스가 있니? 내가 패션을 통해 보완해줄 수 있어!");
             noButton.setVisibility(View.VISIBLE);
             yesButton.setVisibility(View.VISIBLE);
             nextBtn.setVisibility(View.INVISIBLE);
-            section = 1;
         } else if (view.getId() == R.id.noButton) {
             textView.setAnimatedText("시무룩... 다시 한번 생각해봐.....");
             noButton.setVisibility(View.INVISIBLE);
@@ -57,6 +57,7 @@ public class Opening extends AppCompatActivity implements View.OnClickListener {
             noButton.setVisibility(View.INVISIBLE);
             yesButton.setVisibility(View.INVISIBLE);
             nextBtn.setVisibility(View.VISIBLE);
+            section = 1;
         } else if ((view.getId() == R.id.nextButton) && (section == 1)) {
             Intent intent = new Intent(this, SecondPictureUpload.class);
             startActivity(intent);
