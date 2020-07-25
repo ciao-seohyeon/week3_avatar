@@ -1,5 +1,7 @@
 package com.example.week3_avatar;
 
+import android.app.Application;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -31,12 +33,18 @@ public class ImageProcessActivity extends AppCompatActivity {
     Bitmap myBitmap;
     Bitmap tempBitmap;
 
+
     Paint rectPaint = new Paint();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.imageprocess);
+        /////////// get Bundle from other activity ////////////
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("myBundle");
+        Toast.makeText(getApplicationContext(), bundle.getString("name"), Toast.LENGTH_LONG).show();
 
+        /////////////////////// start ////////////////////////
         imageView = (ImageView) findViewById(R.id.imageView);
         button = (Button) findViewById(R.id.button);
 

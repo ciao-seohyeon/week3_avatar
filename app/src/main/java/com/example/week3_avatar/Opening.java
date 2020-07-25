@@ -32,7 +32,8 @@ public class Opening extends AppCompatActivity implements View.OnClickListener {
         noButton = findViewById(R.id.noButton);
         yesButton = findViewById(R.id.yesButton);
 
-        textView.setAnimatedText("안녕 나는 패션요정이야 반가워!");
+        textView.setAnimatedText("안녕? 나는 패션 요정이야 반가워! 너의 간정한 목소리를 듣고 나타났어");
+        nextBtn.setVisibility(View.VISIBLE);
 
         nextBtn.setOnClickListener(this);
         noButton.setOnClickListener(this);
@@ -43,7 +44,8 @@ public class Opening extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if ((view.getId() == R.id.nextButton) && (section == 0)) {
-            textView.setAnimatedText("혹시 너의 컴플렉스가 있니? 내가 패션을 통해 보완해줄 수 있어!");
+            textView.setAnimatedText("평소에 외모 때문에 고문이 많았지? 너에 대해서 이야기 해주면 내가 완벽하게 꾸며줄게!");
+            noButton.setText("그럼 내 고민을 해결해줘!");
             noButton.setVisibility(View.VISIBLE);
             yesButton.setVisibility(View.VISIBLE);
             nextBtn.setVisibility(View.INVISIBLE);
