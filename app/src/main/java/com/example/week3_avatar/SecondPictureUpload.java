@@ -223,7 +223,7 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
 
         } else if ((section == 9) && (view.getId() == R.id.rightButton)) {
 //            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> 내가 선택한 색은? >>>>>>>>>>>>" + bundle.getInt("색"));
-            Intent intent = new Intent(this, ImageProcessActivity.class);
+            Intent intent = new Intent(this, ThirdPictureUpload.class);
             intent.putExtra("myBundle", bundle);
             startActivity(intent);
         }
