@@ -1,5 +1,6 @@
 package com.example.week3_avatar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.nextButton) {
-            textView.setAnimatedText("너의 눈 코 입 날 만지던 그 손길 작은 손톱까지 다아아아~~~~~~");
-        }
+            Intent intent = new Intent(this, ImageProcessActivity.class);
+            startActivity(intent);        }
     }
 }
