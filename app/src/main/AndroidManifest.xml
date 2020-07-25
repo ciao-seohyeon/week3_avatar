@@ -23,6 +23,7 @@
         <activity android:name=".Opening" />
         <activity android:name=".SecondPictureUpload" />
         <activity android:name=".ImageProcessActivity" />
+        <activity android:name=".ThirdPictureUpload" />
 
     </application>
 

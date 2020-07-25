@@ -23,7 +23,6 @@ import com.google.android.gms.vision.face.FaceDetector;
 import com.google.android.gms.vision.face.Landmark;
 
 public class ImageProcessActivity extends AppCompatActivity {
-
     ImageView imageView;
     Button button;
 
@@ -33,8 +32,8 @@ public class ImageProcessActivity extends AppCompatActivity {
     Bitmap myBitmap;
     Bitmap tempBitmap;
 
-
     Paint rectPaint = new Paint();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +41,7 @@ public class ImageProcessActivity extends AppCompatActivity {
         /////////// get Bundle from other activity ////////////
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("myBundle");
-        Toast.makeText(getApplicationContext(), bundle.getString("name"), Toast.LENGTH_LONG).show();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> 내가 선택한 색은? >>>>>>>>>>>>" + bundle.getInt("색"));
 
         /////////////////////// start ////////////////////////
         imageView = (ImageView) findViewById(R.id.imageView);
