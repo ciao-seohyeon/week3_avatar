@@ -35,7 +35,7 @@ public interface IMyService {
 
     /* UPDATE THE User Photo */
     @PUT("/api/users/photoList/{user_id}")
-    Call<User> addToPhotoList(@Path("user_id") String user_id, @Body UserPhoto userphoto);
+    Call<User> addToPhotoList(@Path("user_id") String user_id, @Body String imageName);
 
     /* DELETE THE USER Photo */
     @DELETE("/api/users/photoList/{user_id}")

@@ -38,6 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -281,13 +282,20 @@ public class ImageProcessActivity extends AppCompatActivity {
                     final MultipartBody.Part body = MultipartBody.Part.createFormData("imgFile", newFile.getName(), reqFile);
 
                     new Thread(new Runnable() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
                         public void run() {
                             try {
                                 Response<myFile> response = retrofitClient.uploadFile(body, title).execute();
                                 String savedName = response.body().getSaveFileName();
                                 //로그인 하면 id 받아서 방금 업로드 한 파일 이름 포토리스트에 추가
-                                //retrofitClient.addToPhotoList(id,new UserPhoto(savedName)).execute();
+
+                                Intent intent = getIntent();
+                                final String id = Objects.requireNonNull(intent.getExtras()).getString("id");
+                                System.out.println("id is "+id);
+                                System.out.println("image name is "+savedName);
+                                retrofitClient.addToPhotoList(id, savedName).execute();
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
