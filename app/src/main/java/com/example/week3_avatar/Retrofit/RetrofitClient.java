@@ -14,9 +14,15 @@ public class RetrofitClient {
         return getInstance().create(IMyService.class);
     }
 
-    private static Retrofit getInstance() {
+//    private static Retrofit getInstance() {
+//        Gson gson = new GsonBuilder().setLenient().create();
+//        return new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+//    }
+
+    public static Retrofit getInstance(){
         Gson gson = new GsonBuilder().setLenient().create();
-        return new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit =  new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();;
+        return retrofit;
     }
 
 }

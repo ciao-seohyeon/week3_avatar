@@ -261,7 +261,6 @@ public class ImageProcessActivity extends AppCompatActivity {
                     tempBitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
                     byte[] bitmapdata = bos.toByteArray();
 
-//write the bytes in file
                     FileOutputStream fos = null;
                     try {
                         fos = new FileOutputStream(f);
@@ -274,7 +273,7 @@ public class ImageProcessActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
-                    final MultipartBody.Part body = MultipartBody.Part.createFormData("upload", f.getName(), reqFile);
+                    final MultipartBody.Part body = MultipartBody.Part.createFormData("imgFile", f.getName(), reqFile);
 
                     new Thread(new Runnable() {
                         @Override
@@ -290,10 +289,6 @@ public class ImageProcessActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-//Convert bitmap to byte array
-
-
                 ImageProcessActivity.this.finish();
             }
         });
