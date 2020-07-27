@@ -47,7 +47,6 @@ import retrofit2.Response;
 
 public class ImageProcessActivity extends AppCompatActivity {
     ImageView imageView;
-    Button button;
 
     Bitmap glasses;
     Bitmap hairband;
@@ -77,8 +76,7 @@ public class ImageProcessActivity extends AppCompatActivity {
         }
 
         /////////////////////// start ////////////////////////
-        imageView = (ImageView) findViewById(R.id.imageView);
-        button = (Button) findViewById(R.id.button);
+        imageView = (ImageView) findViewById(R.id.userImage);
 
 //        final Bitmap myBitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.jung);
 
