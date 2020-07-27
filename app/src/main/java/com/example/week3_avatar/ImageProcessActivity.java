@@ -47,6 +47,7 @@ import retrofit2.Response;
 
 public class ImageProcessActivity extends AppCompatActivity {
     ImageView imageView;
+    Button galleryButton;
 
     Bitmap glasses;
     Bitmap hairband;
@@ -65,6 +66,9 @@ public class ImageProcessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.imageprocess);
+
+        galleryButton = findViewById(R.id.galleryButton);
+
         /////////// get Bundle from other activity ////////////
         Intent intent = getIntent();
         final Bundle bundle = intent.getBundleExtra("myBundle");
@@ -262,7 +266,18 @@ public class ImageProcessActivity extends AppCompatActivity {
 
                 //print
                 imageView.setImageBitmap(tempBitmap);
-      
+
+        galleryButton.setVisibility(View.VISIBLE);
+        galleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Gallery.class);
+                intent.putExtra("id", id_st);
+                intent.putExtra("myBundle", bundle);
+                startActivity(intent);
+            }
+        });
+
         // submit 시 db에 사진 upload //
         Button submit_button =  (Button) findViewById(R.id.button2);
         final EditText titleView = (EditText) findViewById(R.id.name);
@@ -311,50 +326,10 @@ public class ImageProcessActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                ////
-                //create a file to write bitmap data
-//                File f = new File(getApplicationContext().getCacheDir(), titleString);
-//
-//                try {
-//                    f.createNewFile();
-//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//                    tempBitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
-//                    byte[] bitmapdata = bos.toByteArray();
-//
-//                    FileOutputStream fos = null;
-//                    try {
-//                        fos = new FileOutputStream(f);
-//                        fos.write(bitmapdata);
-//                        fos.flush();
-//                        fos.close();
-//                    } catch (FileNotFoundException e) {
-//                        e.printStackTrace();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
-//                    final MultipartBody.Part body = MultipartBody.Part.createFormData("imgFile", f.getName(), reqFile);
-//
-//                    new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                Response<myFile> response = retrofitClient.uploadFile(body, title).execute();
-//                                String savedName = response.body().getSaveFileName();
-//                                //로그인 하면 id 받아서 방금 업로드 한 파일 이름 포토리스트에 추가
-//                                //retrofitClient.addToPhotoList(id,new UserPhoto(savedName)).execute();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }).start();
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
                 ImageProcessActivity.this.finish();
             }
         });
+
 
     }
 
