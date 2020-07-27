@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:orientation="vertical"
-        android:background="@drawable/speech_bubble_fairy"
+        android:background="@drawable/fairy_speechbubble"
         android:layout_margin="20dp"
         android:layout_alignParentBottom="true"
         >
@@ -23,23 +23,49 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="80dp"
-        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginHorizontal="40dp"
         android:text=""
         app:rtv_duration="2000"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="다음"
-            />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:paddingBottom="25dp"
+            android:paddingHorizontal="40dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/leftButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="난 만족해!"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:layout_marginRight="5dp"
+                />
+
+            <Button
+                android:id="@+id/middleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:text=""
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/rightButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="변화를 주고 싶어"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                />
+
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
