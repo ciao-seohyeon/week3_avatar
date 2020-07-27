@@ -50,4 +50,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     //Material Styled Dialog
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
+
+    // 동그란 이미지 View
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

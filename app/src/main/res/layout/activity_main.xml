@@ -19,4 +19,11 @@
         android:layout_below="@+id/startButton"
         android:text="Gallery"/>
 
+    <Button
+        android:id="@+id/friendButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/galleryButton"
+        android:text="Friend"/>
+
 </RelativeLayout>

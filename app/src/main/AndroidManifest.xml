@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <meta-data
         android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -30,6 +31,7 @@
         <activity android:name=".SecondPictureUpload" />
         <activity android:name=".ImageProcessActivity" />
         <activity android:name=".ThirdPictureUpload" />
+        <activity android:name=".FourthFriend" />
 
     </application>
 

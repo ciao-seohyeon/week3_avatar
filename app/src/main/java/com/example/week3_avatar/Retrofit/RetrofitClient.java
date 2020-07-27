@@ -8,11 +8,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "http://192.168.0.85:6060";
+    private static final String BASE_URL = "http://192.249.19.242:7480";
 
     public static IMyService getApiService() {
         return getInstance().create(IMyService.class);
     }
+
 
 //    private static Retrofit getInstance() {
 //        Gson gson = new GsonBuilder().setLenient().create();
