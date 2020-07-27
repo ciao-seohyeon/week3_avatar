@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = getIntent();
         final String id = Objects.requireNonNull(intent.getExtras()).getString("id");
-        final IMyService retrofitClient = RetrofitClient.getApiService();
 
         startBtn = findViewById(R.id.startButton);
         startBtn.setOnClickListener(this);
@@ -41,6 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.startButton) {
             Intent intent = new Intent(this, Opening.class);
+            startActivity(intent);
+        }
+
+        if (view.getId() == R.id.galleryButton){
+            Intent intent = new Intent(this, Gallery.class);
             startActivity(intent);
         }
 
