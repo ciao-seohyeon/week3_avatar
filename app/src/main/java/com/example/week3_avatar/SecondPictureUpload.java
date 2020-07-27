@@ -1,15 +1,19 @@
 package com.example.week3_avatar;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.antonionicolaspina.revealtextview.RevealTextView;
+
+import java.util.Objects;
 
 public class SecondPictureUpload extends AppCompatActivity implements View.OnClickListener{
     RevealTextView textView;
@@ -40,6 +44,7 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
         nextButton.setOnClickListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
         if ((view.getId() == R.id.leftButton) && (section == 0)) {
@@ -225,8 +230,12 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
 
         } else if ((section == 9) && (view.getId() == R.id.nextButton)) {
 //            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> 내가 선택한 색은? >>>>>>>>>>>>" + bundle.getInt("색"));
+            Intent i = getIntent();
+            final String id =(i.getExtras()).getString("id");
+
             Intent intent = new Intent(this, ThirdPictureUpload.class);
             intent.putExtra("myBundle", bundle);
+            intent.putExtra("id", id);
             startActivity(intent);
         }
     }

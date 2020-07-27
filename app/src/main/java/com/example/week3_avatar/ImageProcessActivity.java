@@ -60,6 +60,7 @@ public class ImageProcessActivity extends AppCompatActivity {
 
     Paint rectPaint = new Paint();
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,9 @@ public class ImageProcessActivity extends AppCompatActivity {
         /////////// get Bundle from other activity ////////////
         Intent intent = getIntent();
         final Bundle bundle = intent.getBundleExtra("myBundle");
+        final String id_st = Objects.requireNonNull(intent.getExtras()).getString("id");
+
+        System.out.println("id is "+id_st);
         imageUri = Uri.parse(bundle.getString("uri"));
         Bitmap myBitmap = null;
         try {
@@ -266,6 +270,7 @@ public class ImageProcessActivity extends AppCompatActivity {
         submit_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+
                 final String titleString = titleView.getText().toString();
                 final RequestBody title = RequestBody.create(MultipartBody.FORM, titleString);
 
@@ -276,6 +281,7 @@ public class ImageProcessActivity extends AppCompatActivity {
                     fileOutputStream = new FileOutputStream(newFile);
                     tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
                     fileOutputStream.close();
+
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), newFile);
                     final MultipartBody.Part body = MultipartBody.Part.createFormData("imgFile", newFile.getName(), reqFile);
 
@@ -284,15 +290,15 @@ public class ImageProcessActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                Response<myFile> response = retrofitClient.uploadFile(body, title).execute();
-                                String savedName = response.body().getSaveFileName();
-                                //로그인 하면 id 받아서 방금 업로드 한 파일 이름 포토리스트에 추가
 
-                                Intent intent = getIntent();
-                                final String id = Objects.requireNonNull(intent.getExtras()).getString("id");
-                                System.out.println("id is "+id);
-                                System.out.println("image name is "+savedName);
-                                retrofitClient.addToPhotoList(id, savedName).execute();
+                                System.out.println("the title is "+titleString);
+                                RequestBody id = RequestBody.create(MultipartBody.FORM, id_st);
+
+                                retrofitClient.addToPhotoList(id_st, titleString).execute();
+
+                                Response<myFile> response = retrofitClient.uploadFile(body, title, id).execute();
+                                //String savedName = response.body().getSaveFileName();
+                                //로그인 하면 id 받아서 방금 업로드 한 파일 이름 포토리스트에 추가
 
                             } catch (IOException e) {
                                 e.printStackTrace();

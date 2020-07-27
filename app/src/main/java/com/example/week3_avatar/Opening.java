@@ -2,6 +2,7 @@ package com.example.week3_avatar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,20 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.antonionicolaspina.revealtextview.RevealTextView;
+
+import java.util.Objects;
 
 public class Opening extends AppCompatActivity implements View.OnClickListener {
     RevealTextView textView;
     Button leftButton, rightButton, nextBUtton;
     Integer section = 0;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,7 @@ public class Opening extends AppCompatActivity implements View.OnClickListener {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
         if ((view.getId() == R.id.rightButton) && (section == 0)) {
@@ -61,7 +67,12 @@ public class Opening extends AppCompatActivity implements View.OnClickListener {
             rightButton.setText("그럼 내 고민을 해결해줘!");
             leftButton.setVisibility(View.INVISIBLE);
         } else if ((view.getId() == R.id.nextButton) && (section == 2)) {
+            Intent i = getIntent();
+            final String id = Objects.requireNonNull(i.getExtras()).getString("id");
+
             Intent intent = new Intent(this, SecondPictureUpload.class);
+            intent.putExtra("id", id);
+            System.out.println("id is"+id);
             startActivity(intent);
         }
     }

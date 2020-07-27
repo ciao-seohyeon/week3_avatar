@@ -1,9 +1,11 @@
 package com.example.week3_avatar.Retrofit;
 
 import com.example.week3_avatar.Retrofit.IMyService;
+import com.google.android.gms.common.internal.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -15,15 +17,12 @@ public class RetrofitClient {
         return getInstance().create(IMyService.class);
     }
 
-//    private static Retrofit getInstance() {
-//        Gson gson = new GsonBuilder().setLenient().create();
-//        return new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-//    }
-
     public static Retrofit getInstance(){
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit =  new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();;
         return retrofit;
     }
+
+
 
 }
