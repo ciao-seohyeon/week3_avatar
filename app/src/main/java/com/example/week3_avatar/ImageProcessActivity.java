@@ -21,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.week3_avatar.Retrofit.IMyService;
 import com.example.week3_avatar.Retrofit.RetrofitClient;
+import com.example.week3_avatar.Retrofit.User;
+import com.example.week3_avatar.Retrofit.UserPhoto;
 import com.example.week3_avatar.Retrofit.myFile;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.Face;
@@ -280,8 +282,11 @@ public class ImageProcessActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 Response<myFile> response = retrofitClient.uploadFile(body, title).execute();
+                                String savedName = response.body().getSaveFileName();
+                                //로그인 하면 id 받아서 방금 업로드 한 파일 이름 포토리스트에 추가
+                                //retrofitClient.addToPhotoList(id,new UserPhoto(savedName)).execute();
                             } catch (IOException e) {
-                                e.printStackTrace();
+                                e.printStackTrace(); 
                             }
                         }
                     }).start();
