@@ -23,7 +23,6 @@ import com.google.android.gms.vision.face.FaceDetector;
 import com.google.android.gms.vision.face.Landmark;
 
 public class ImageProcessActivity extends AppCompatActivity {
-
     ImageView imageView;
     Button button;
 
@@ -33,16 +32,17 @@ public class ImageProcessActivity extends AppCompatActivity {
     Bitmap myBitmap;
     Bitmap tempBitmap;
 
-
     Paint rectPaint = new Paint();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.imageprocess);
         /////////// get Bundle from other activity ////////////
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("myBundle");
-        Toast.makeText(getApplicationContext(), bundle.getString("name"), Toast.LENGTH_LONG).show();
+        final Bundle bundle = intent.getBundleExtra("myBundle");
 
         /////////////////////// start ////////////////////////
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -122,107 +122,111 @@ public class ImageProcessActivity extends AppCompatActivity {
                 int face_width = (int) (earRight-earLeft);
 
                 ///////////////////////////////////////////////////////////////
-                //for hair_man
-                final Bitmap hairman_raw = BitmapFactory.decodeResource(getResources(), R.drawable.hair_man);
-                Bitmap hair_man = resizeBitmap((int) (face_width*1.35), hairman_raw);
-                //canvas.drawBitmap(hair_man, (float)(earLeft-face_width*0.2), (float) (nose_y-face_width*1.1), null);
-
-                //for hair_short_girl
-                final Bitmap hairgirl_raw = BitmapFactory.decodeResource(getResources(), R.drawable.hair_short_girl);
-                Bitmap hair_girl = resizeBitmap((int) (face_width*1.5), hairgirl_raw);
-                canvas.drawBitmap(hair_girl, (float)(earLeft-face_width*0.2), (float) (nose_y-face_width*1.2), null);
-
+                if (bundle.getInt("헤어스타일") == 0) {
+                    //for hair_man
+                    final Bitmap hairgirl_raw = BitmapFactory.decodeResource(getResources(), R.drawable.hair_short_girl);
+                    Bitmap hair_girl = resizeBitmap((int) (face_width*1.5), hairgirl_raw);
+                    canvas.drawBitmap(hair_girl, (float)(earLeft-face_width*0.2), (float) (nose_y-face_width*1.2), null);
+                } else if (bundle.getInt("헤어스타일") == 1) {
+                    //for hair_short_girl
+                    final Bitmap hairman_raw = BitmapFactory.decodeResource(getResources(), R.drawable.hair_man);
+                    Bitmap hair_man = resizeBitmap((int) (face_width*1.35), hairman_raw);
+                    canvas.drawBitmap(hair_man, (float)(earLeft-face_width*0.2), (float) (nose_y-face_width*1.1), null);
+                }
                 ////////////////////////////////////////////////////////////////////
 
 
                 //////////////////////////////////////////////////////////////////////
-                //for hairband
-                final Bitmap hairBand_raw = BitmapFactory.decodeResource(getResources(), R.drawable.hairband);
-                hairband = resizeBitmap((int) (face_width*1.1), hairBand_raw);
-                //canvas.drawBitmap(hairband, (float)(eyeLeft_x-face_width*0.45), (float) (nose_y-face_width), null);
-
-                //for hairband2
-                final Bitmap hairBand_raw2 = BitmapFactory.decodeResource(getResources(), R.drawable.hairband2);
-                Bitmap hairband2 = resizeBitmap((int) (face_width*1.2), hairBand_raw2);
-                canvas.drawBitmap(hairband2, (float)(eyeLeft_x-face_width*0.3), (float) (nose_y-face_width), null);
-
-                //for ribbon
-                final Bitmap ribbon_raw = BitmapFactory.decodeResource(getResources(), R.drawable.ribbon);
-                Bitmap ribbon = resizeBitmap((int) (face_width*0.5), ribbon_raw);
-                //canvas.drawBitmap(ribbon, (float)(eyeLeft_x-face_width*0.45), (float) (nose_y-face_width), null);
+                if (bundle.getInt("헤어포인트") == 0) {
+                    //for hairband
+                    final Bitmap hairBand_raw = BitmapFactory.decodeResource(getResources(), R.drawable.hairband);
+                    hairband = resizeBitmap((int) (face_width*1.1), hairBand_raw);
+                    canvas.drawBitmap(hairband, (float)(eyeLeft_x-face_width*0.45), (float) (nose_y-face_width), null);
+                } else if (bundle.getInt("헤어포인트") == 1) {
+                    //for hairband2
+                    final Bitmap hairBand_raw2 = BitmapFactory.decodeResource(getResources(), R.drawable.hairband2);
+                    Bitmap hairband2 = resizeBitmap((int) (face_width*1.2), hairBand_raw2);
+                    canvas.drawBitmap(hairband2, (float)(eyeLeft_x-face_width*0.3), (float) (nose_y-face_width), null);
+                } else if (bundle.getInt("헤어포인트") == 2) {
+                    //for ribbon
+                    final Bitmap ribbon_raw = BitmapFactory.decodeResource(getResources(), R.drawable.ribbon);
+                    Bitmap ribbon = resizeBitmap((int) (face_width*0.5), ribbon_raw);
+                    canvas.drawBitmap(ribbon, (float)(eyeLeft_x-face_width*0.45), (float) (nose_y-face_width), null);
+                }
                 ///////////////////////////////////////////////////////////////////////////
 
-                //for eyelash
-
                 //////////////////////////////////////////////////////////////////////////////
-                //for red_nose
-                final Bitmap red_nose_raw = BitmapFactory.decodeResource(getResources(), R.drawable.red_nose);
-                Bitmap red_nose = resizeBitmap((int) ((eyeRight_x-eyeLeft_x)*0.75), red_nose_raw);
-                //canvas.drawBitmap(red_nose, (float)(nose_x-red_nose.getWidth()*0.4), (float) (nose_y - red_nose.getHeight()*0.75), null);
-
-                //for blue_nose
-                final Bitmap blue_nose_raw = BitmapFactory.decodeResource(getResources(), R.drawable.blue_nose);
-                Bitmap blue_nose = resizeBitmap((int) ((eyeRight_x-eyeLeft_x)*0.75), blue_nose_raw);
-                //canvas.drawBitmap(blue_nose, (float)(nose_x-blue_nose.getWidth()*0.4), (float) (nose_y - blue_nose.getHeight()*0.75), null);
-
-                //for green_nose
-                final Bitmap green_nose_raw = BitmapFactory.decodeResource(getResources(), R.drawable.green_nose);
-                Bitmap green_nose = resizeBitmap((int) ((eyeRight_x-eyeLeft_x)*0.75), green_nose_raw);
-                canvas.drawBitmap(green_nose, (float)(nose_x-green_nose.getWidth()*0.4), (float) (nose_y - green_nose.getHeight()*0.75), null);
-
-                //for purple_nose
-                final Bitmap purple_nose_raw = BitmapFactory.decodeResource(getResources(), R.drawable.purple_nose);
-                Bitmap purple_nose = resizeBitmap((int) ((eyeRight_x-eyeLeft_x)*0.75), purple_nose_raw);
-                //canvas.drawBitmap(purple_nose, (float)(nose_x-red_nose.getWidth()*0.4), (float) (nose_y - red_nose.getHeight()*0.75), null);
+                if (bundle.getInt("색") == 0) {
+                    //for blue_nose
+                    final Bitmap blue_nose_raw = BitmapFactory.decodeResource(getResources(), R.drawable.blue_nose);
+                    Bitmap blue_nose = resizeBitmap((int) ((eyeRight_x-eyeLeft_x)*0.75), blue_nose_raw);
+                    canvas.drawBitmap(blue_nose, (float)(nose_x-blue_nose.getWidth()*0.4), (float) (nose_y - blue_nose.getHeight()*0.75), null);
+                } else if (bundle.getInt("색") == 1 ) {
+                    //for red_nose
+                    final Bitmap red_nose_raw = BitmapFactory.decodeResource(getResources(), R.drawable.red_nose);
+                    Bitmap red_nose = resizeBitmap((int) ((eyeRight_x-eyeLeft_x)*0.75), red_nose_raw);
+                    canvas.drawBitmap(red_nose, (float)(nose_x-red_nose.getWidth()*0.4), (float) (nose_y - red_nose.getHeight()*0.75), null);
+                } else if (bundle.getInt("색") == 2) {
+                    //for green_nose
+                    final Bitmap green_nose_raw = BitmapFactory.decodeResource(getResources(), R.drawable.green_nose);
+                    Bitmap green_nose = resizeBitmap((int) ((eyeRight_x-eyeLeft_x)*0.75), green_nose_raw);
+                    canvas.drawBitmap(green_nose, (float)(nose_x-green_nose.getWidth()*0.4), (float) (nose_y - green_nose.getHeight()*0.75), null);
+                }
                 ////////////////////////////////////////////////////////////////////////////
 
                 /////////////////////////////////////////////////////////////////////////////
-                //for cheek
-                final Bitmap cheek_raw = BitmapFactory.decodeResource(getResources(), R.drawable.cheek);
-                Bitmap cheek = resizeBitmap(face_width, cheek_raw);
-                //canvas.drawBitmap(cheek, (float)(nose_x - cheek.getWidth()*0.45), (float) (nose_y - cheek.getHeight()*0.2), null);
+                if (bundle.getInt("수줍음") == 0) {
 
-                //for cheek
-                final Bitmap cheek_raw2 = BitmapFactory.decodeResource(getResources(), R.drawable.cheek2);
-                Bitmap cheek2 = resizeBitmap((int)(face_width*1.3), cheek_raw2);
-                canvas.drawBitmap(cheek2, (float)(nose_x - cheek2.getWidth()*0.5), (float) (nose_y - cheek2.getHeight()*0.5), null);
-
+                } else if (bundle.getInt("수줍음") == 1) {
+                    //for cheek
+                    final Bitmap cheek_raw = BitmapFactory.decodeResource(getResources(), R.drawable.cheek);
+                    Bitmap cheek = resizeBitmap(face_width, cheek_raw);
+                    canvas.drawBitmap(cheek, (float)(nose_x - cheek.getWidth()*0.45), (float) (nose_y - cheek.getHeight()*0.2), null);
+                } else if (bundle.getInt("수줍음") == 2) {
+                    //for cheek
+                    final Bitmap cheek_raw2 = BitmapFactory.decodeResource(getResources(), R.drawable.cheek2);
+                    Bitmap cheek2 = resizeBitmap((int)(face_width*1.3), cheek_raw2);
+                    canvas.drawBitmap(cheek2, (float)(nose_x - cheek2.getWidth()*0.5), (float) (nose_y - cheek2.getHeight()*0.5), null);
+                }
                 //////////////////////////////////////////////////////////////////////////////
 
                 ////////////////////////////////////////////////////////////////////////////////
-                //for mouth
                 int mouth_size = (int) ((mouthRight_x-mouthLeft_x)*0.9);
-                final Bitmap lip_raw = BitmapFactory.decodeResource(getResources(), R.drawable.lip);
-                Bitmap lip = resizeBitmap((int) (mouth_size * 1.2), lip_raw);
-                //canvas.drawBitmap(lip, (float)(mouthLeft_x), (float) (mouthLeft_y-lip.getHeight()*0.35), null);
-
-                //mouth2
-                final Bitmap lip_raw2 = BitmapFactory.decodeResource(getResources(), R.drawable.lip2);
-                Bitmap lip2 = resizeBitmap((int) (mouth_size * 1.2), lip_raw2);
-                //canvas.drawBitmap(lip2, (float)(mouthLeft_x), (float) (mouthLeft_y-lip2.getHeight()*0.3), null);
-
-                //mouth3
-                final Bitmap lip_raw3 = BitmapFactory.decodeResource(getResources(), R.drawable.lip3);
-                Bitmap lip3 = resizeBitmap((int) (mouth_size * 1.2), lip_raw3);
-                canvas.drawBitmap(lip3, (float)(mouthLeft_x), (float) (mouthLeft_y-lip3.getHeight()*0.35), null);
+                if (bundle.getInt("연애스타일") == 0) {
+                    //for mouth
+                    final Bitmap lip_raw = BitmapFactory.decodeResource(getResources(), R.drawable.lip);
+                    Bitmap lip = resizeBitmap((int) (mouth_size * 1.2), lip_raw);
+                    canvas.drawBitmap(lip, (float)(mouthLeft_x), (float) (mouthLeft_y-lip.getHeight()*0.35), null);
+                } else if (bundle.getInt("연애스타일") == 1) {
+                    //mouth2
+                    final Bitmap lip_raw2 = BitmapFactory.decodeResource(getResources(), R.drawable.lip2);
+                    Bitmap lip2 = resizeBitmap((int) (mouth_size * 1.2), lip_raw2);
+                    canvas.drawBitmap(lip2, (float)(mouthLeft_x), (float) (mouthLeft_y-lip2.getHeight()*0.3), null);
+                } else if (bundle.getInt("연애스타일") == 2) {
+                    //mouth3
+                    final Bitmap lip_raw3 = BitmapFactory.decodeResource(getResources(), R.drawable.lip3);
+                    Bitmap lip3 = resizeBitmap((int) (mouth_size * 1.2), lip_raw3);
+                    canvas.drawBitmap(lip3, (float)(mouthLeft_x), (float) (mouthLeft_y-lip3.getHeight()*0.35), null);
+                }
                 ////////////////////////////////////////////////////////////////////////////////
 
-
                 ////////////////////////////////////////////////////////////////////////////////
-                //for glass
-                final Bitmap glasses_raw = BitmapFactory.decodeResource(getResources(), R.drawable.glasses2);
-                glasses = resizeBitmap((int) (face_width), glasses_raw);
-                //canvas.drawBitmap(glasses, (float)(eyeLeft_x -(eyeRight_x-eyeLeft_x)/2) , (float)((eyeRight_y+eyeLeft_y)/2 - glasses.getHeight()*0.3) , null);
-
-                //for pink_glass
-                final Bitmap pink_glasses_raw = BitmapFactory.decodeResource(getResources(), R.drawable.pink_glasses);
-                Bitmap glasses_pink = resizeBitmap((int) (face_width), pink_glasses_raw);
-                //canvas.drawBitmap(glasses_pink, (float)(eyeLeft_x -(eyeRight_x-eyeLeft_x)/2) , (float)((eyeRight_y+eyeLeft_y)/2 - glasses_pink.getHeight()*0.5) , null);
-
-                //for black_glass
-                final Bitmap black_glasses_raw = BitmapFactory.decodeResource(getResources(), R.drawable.black_glasses);
-                Bitmap black_glasses = resizeBitmap((int) (face_width), black_glasses_raw);
-                canvas.drawBitmap(black_glasses, (float)(eyeLeft_x -(eyeRight_x-eyeLeft_x)/2) , (float)((eyeRight_y+eyeLeft_y)/2 - black_glasses.getHeight()*0.5) , null);
+                if (bundle.getInt("스타일") == 0) {
+                    //for glass
+                    final Bitmap glasses_raw = BitmapFactory.decodeResource(getResources(), R.drawable.glasses2);
+                    glasses = resizeBitmap((int) (face_width), glasses_raw);
+                    canvas.drawBitmap(glasses, (float)(eyeLeft_x -(eyeRight_x-eyeLeft_x)/2) , (float)((eyeRight_y+eyeLeft_y)/2 - glasses.getHeight()*0.3) , null);
+                } else if (bundle.getInt("스타일") == 2) {
+                    //for pink_glass
+                    final Bitmap pink_glasses_raw = BitmapFactory.decodeResource(getResources(), R.drawable.pink_glasses);
+                    Bitmap glasses_pink = resizeBitmap((int) (face_width), pink_glasses_raw);
+                    canvas.drawBitmap(glasses_pink, (float)(eyeLeft_x -(eyeRight_x-eyeLeft_x)/2) , (float)((eyeRight_y+eyeLeft_y)/2 - glasses_pink.getHeight()*0.5) , null);
+                } else if (bundle.getInt("스타일") == 1) {
+                    //for black_glass
+                    final Bitmap black_glasses_raw = BitmapFactory.decodeResource(getResources(), R.drawable.black_glasses);
+                    Bitmap black_glasses = resizeBitmap((int) (face_width), black_glasses_raw);
+                    canvas.drawBitmap(black_glasses, (float)(eyeLeft_x -(eyeRight_x-eyeLeft_x)/2) , (float)((eyeRight_y+eyeLeft_y)/2 - black_glasses.getHeight()*0.5) , null);
+                }
                 ////////////////////////////////////////////////////////////////////////////////
 
                 //print
