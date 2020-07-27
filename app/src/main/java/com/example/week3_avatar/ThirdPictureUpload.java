@@ -23,7 +23,7 @@ import java.util.Objects;
 import retrofit2.http.Url;
 
 public class ThirdPictureUpload extends AppCompatActivity {
-    Button rightButton;
+    Button rightButton, galleryButton;
     RevealTextView textView;
     Integer section = 0;
 
@@ -49,6 +49,15 @@ public class ThirdPictureUpload extends AppCompatActivity {
 
         rightButton = findViewById(R.id.rightButton);
         textView = findViewById(R.id.speechBubble);
+        galleryButton = findViewById(R.id.galleryButton);
+
+        galleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override

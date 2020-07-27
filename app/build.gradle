@@ -50,4 +50,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     //Material Styled Dialog
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
+    //cardview
+    implementation "androidx.cardview:cardview:1.0.0"
 }

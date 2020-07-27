@@ -47,7 +47,6 @@ import retrofit2.Response;
 
 public class ImageProcessActivity extends AppCompatActivity {
     ImageView imageView;
-    Button galleryButton;
 
     Bitmap glasses;
     Bitmap hairband;
@@ -67,7 +66,6 @@ public class ImageProcessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.imageprocess);
 
-        galleryButton = findViewById(R.id.galleryButton);
 
         /////////// get Bundle from other activity ////////////
         Intent intent = getIntent();
@@ -267,16 +265,7 @@ public class ImageProcessActivity extends AppCompatActivity {
                 //print
                 imageView.setImageBitmap(tempBitmap);
 
-        galleryButton.setVisibility(View.VISIBLE);
-        galleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Gallery.class);
-                intent.putExtra("id", id_st);
-                intent.putExtra("myBundle", bundle);
-                startActivity(intent);
-            }
-        });
+
 
         // submit 시 db에 사진 upload //
         Button submit_button =  (Button) findViewById(R.id.button2);

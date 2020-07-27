@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button startBtn;
+    Button startBtn, galleryBtn;
 
     private static String data = "hey";
 
@@ -28,9 +28,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         startBtn = findViewById(R.id.startButton);
         startBtn.setOnClickListener(this);
+
+        galleryBtn = findViewById(R.id.galleryButton);
+        galleryBtn.setOnClickListener(this);
     }
 
 
@@ -46,9 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (view.getId() == R.id.galleryButton){
-            Intent intent = new Intent(this, Gallery.class);
             Intent i = getIntent();
-            final String id = Objects.requireNonNull(i.getExtras()).getString("id");
+            final String id =(i.getExtras()).getString("id");
+
+            Intent intent = new Intent(this, Gallery.class);
             intent.putExtra("id", id);
             startActivity(intent);
         }
