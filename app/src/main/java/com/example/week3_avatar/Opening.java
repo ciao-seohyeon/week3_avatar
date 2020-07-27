@@ -19,7 +19,7 @@ import com.antonionicolaspina.revealtextview.RevealTextView;
 
 public class Opening extends AppCompatActivity implements View.OnClickListener {
     RevealTextView textView;
-    Button leftButton, rightButton;
+    Button leftButton, rightButton, nextBUtton;
     Integer section = 0;
 
     @Override
@@ -30,12 +30,14 @@ public class Opening extends AppCompatActivity implements View.OnClickListener {
         textView = findViewById(R.id.speechBubble);
         rightButton = findViewById(R.id.rightButton);
         leftButton = findViewById(R.id.leftButton);
+        nextBUtton = findViewById(R.id.nextButton);
 
         textView.setAnimatedText("안녕? 나는 패션 요정이야 반가워! 너의 간절한 목소리를 듣고 나타났어");
         rightButton.setVisibility(View.VISIBLE);
 
         rightButton.setOnClickListener(this);
         leftButton.setOnClickListener(this);
+        nextBUtton.setOnClickListener(this);
     }
 
 
@@ -50,14 +52,15 @@ public class Opening extends AppCompatActivity implements View.OnClickListener {
         } else if ((view.getId() == R.id.rightButton) && (section == 1)) {
             leftButton.setVisibility(View.INVISIBLE);
             textView.setAnimatedText("좋아 그럼 가보자!");
-            rightButton.setText("");
+            rightButton.setVisibility(View.GONE);
+            nextBUtton.setVisibility(View.VISIBLE);
             section = 2;
         } else if ((view.getId() == R.id.leftButton) && (section == 1)) {
             textView.setAnimatedText("시무룩... 다시 한번 생각해봐 ...");
             leftButton.setText("");
             rightButton.setText("그럼 내 고민을 해결해줘!");
             leftButton.setVisibility(View.INVISIBLE);
-        } else if ((view.getId() == R.id.rightButton) && (section == 2)) {
+        } else if ((view.getId() == R.id.nextButton) && (section == 2)) {
             Intent intent = new Intent(this, SecondPictureUpload.class);
             startActivity(intent);
         }
