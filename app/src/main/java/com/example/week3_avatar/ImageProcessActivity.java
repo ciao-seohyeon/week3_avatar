@@ -1,6 +1,7 @@
 package com.example.week3_avatar;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,16 +12,35 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.week3_avatar.Retrofit.IMyService;
+import com.example.week3_avatar.Retrofit.RetrofitClient;
+import com.example.week3_avatar.Retrofit.User;
+import com.example.week3_avatar.Retrofit.UserPhoto;
+import com.example.week3_avatar.Retrofit.myFile;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
 import com.google.android.gms.vision.face.Landmark;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Response;
 
 public class ImageProcessActivity extends AppCompatActivity {
     ImageView imageView;
@@ -31,6 +51,9 @@ public class ImageProcessActivity extends AppCompatActivity {
     Canvas canvas;
     Bitmap myBitmap;
     Bitmap tempBitmap;
+
+    final IMyService retrofitClient = RetrofitClient.getApiService();
+
 
     Paint rectPaint = new Paint();
 
@@ -55,69 +78,66 @@ public class ImageProcessActivity extends AppCompatActivity {
         canvas = new Canvas(tempBitmap);
         canvas.drawBitmap(myBitmap,0,0,null);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View view) {
-                FaceDetector faceDetector = new FaceDetector.Builder(getApplicationContext())
-                        .setTrackingEnabled(false)
-                        .setLandmarkType(FaceDetector.ALL_LANDMARKS)
-                        .setMode(FaceDetector.FAST_MODE)
-                        .build();
-                if (!faceDetector.isOperational()) {
-                    Toast.makeText(ImageProcessActivity.this,"Face detector could not be set up on your device", Toast.LENGTH_SHORT).show();
-                    return;
+        FaceDetector faceDetector = new FaceDetector.Builder(getApplicationContext())
+                .setTrackingEnabled(false)
+                .setLandmarkType(FaceDetector.ALL_LANDMARKS)
+                .setMode(FaceDetector.FAST_MODE)
+                .build();
+
+        if (!faceDetector.isOperational()) {
+            Toast.makeText(ImageProcessActivity.this,"Face detector could not be set up on your device", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
+        SparseArray<Face> sparseArray = faceDetector.detect(frame);
+        int eyeLeft_x = 0;
+        int eyeLeft_y = 0;
+        int eyeRight_x = 0;
+        int eyeRight_y = 0;
+        int earLeft = 0;
+        int earRight = 0;
+        int nose_x = 0;
+        int nose_y = 0;
+        int mouthLeft_x = 0;
+        int mouthLeft_y = 0;
+        int mouthRight_x = 0;
+        int mouthRight_y = 0;
+
+        for (int i=0; i<sparseArray.size(); i++) {
+            com.google.android.gms.vision.face.Face face = sparseArray.valueAt(i);
+            for(Landmark landmark:face.getLandmarks()) {
+                int cx = (int) (landmark.getPosition().x);
+                int cy = (int)(landmark.getPosition().y);
+
+                if (landmark.getType() == Landmark.LEFT_EYE){
+                    eyeLeft_x = cx;
+                    eyeLeft_y = cy;
                 }
-
-                Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
-                SparseArray<Face> sparseArray = faceDetector.detect(frame);
-                int eyeLeft_x = 0;
-                int eyeLeft_y = 0;
-                int eyeRight_x = 0;
-                int eyeRight_y = 0;
-                int earLeft = 0;
-                int earRight = 0;
-                int nose_x = 0;
-                int nose_y = 0;
-                int mouthLeft_x = 0;
-                int mouthLeft_y = 0;
-                int mouthRight_x = 0;
-                int mouthRight_y = 0;
-
-                for (int i=0; i<sparseArray.size(); i++) {
-                    com.google.android.gms.vision.face.Face face = sparseArray.valueAt(i);
-                    for(Landmark landmark:face.getLandmarks()) {
-                        int cx = (int) (landmark.getPosition().x);
-                        int cy = (int)(landmark.getPosition().y);
-
-                        if (landmark.getType() == Landmark.LEFT_EYE){
-                            eyeLeft_x = cx;
-                            eyeLeft_y = cy;
-                        }
-                        if (landmark.getType() == Landmark.RIGHT_EYE){
-                            eyeRight_x = cx;
-                            eyeRight_y = cy;
-                        }
-                        if (landmark.getType() == Landmark.NOSE_BASE) {
-                            nose_x = cx;
-                            nose_y = cy;
-                        }
-                        if (landmark.getType() == Landmark.RIGHT_EAR) {
-                            earRight = cx;
-                        }
-                        if (landmark.getType() == Landmark.LEFT_EAR) {
-                            earLeft = cx;
-                        }
-                        if (landmark.getType() == Landmark.LEFT_MOUTH) {
-                            mouthLeft_x = cx;
-                            mouthLeft_y = cy;
-                        }
-                        if (landmark.getType() == Landmark.RIGHT_MOUTH) {
-                            mouthRight_x = cx;
-                            mouthRight_y = cy;
-                        }
-                    }
+                if (landmark.getType() == Landmark.RIGHT_EYE){
+                    eyeRight_x = cx;
+                    eyeRight_y = cy;
                 }
+                if (landmark.getType() == Landmark.NOSE_BASE) {
+                    nose_x = cx;
+                    nose_y = cy;
+                }
+                if (landmark.getType() == Landmark.RIGHT_EAR) {
+                    earRight = cx;
+                }
+                if (landmark.getType() == Landmark.LEFT_EAR) {
+                    earLeft = cx;
+                }
+                if (landmark.getType() == Landmark.LEFT_MOUTH) {
+                    mouthLeft_x = cx;
+                    mouthLeft_y = cy;
+                }
+                if (landmark.getType() == Landmark.RIGHT_MOUTH) {
+                    mouthRight_x = cx;
+                    mouthRight_y = cy;
+                }
+            }
+        }
 
                 int face_width = (int) (earRight-earLeft);
 
@@ -231,12 +251,80 @@ public class ImageProcessActivity extends AppCompatActivity {
 
                 //print
                 imageView.setImageBitmap(tempBitmap);
+      
+        // submit 시 db에 사진 upload //
+        Button submit_button =  (Button) findViewById(R.id.button2);
+        final EditText titleView = (EditText) findViewById(R.id.name);
 
+        submit_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                final String titleString = titleView.getText().toString();
+                final RequestBody title = RequestBody.create(MultipartBody.FORM, titleString);
+
+                //create a file to write bitmap data
+                File f = new File(getApplicationContext().getCacheDir(), titleString);
+                try {
+                    f.createNewFile();
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    tempBitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+
+                    FileOutputStream fos = null;
+                    try {
+                        fos = new FileOutputStream(f);
+                        fos.write(bitmapdata);
+                        fos.flush();
+                        fos.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
+                    final MultipartBody.Part body = MultipartBody.Part.createFormData("imgFile", f.getName(), reqFile);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Response<myFile> response = retrofitClient.uploadFile(body, title).execute();
+                                String savedName = response.body().getSaveFileName();
+                                //로그인 하면 id 받아서 방금 업로드 한 파일 이름 포토리스트에 추가
+                                //retrofitClient.addToPhotoList(id,new UserPhoto(savedName)).execute();
+                            } catch (IOException e) {
+                                e.printStackTrace(); 
+                            }
+                        }
+                    }).start();
+                  
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ImageProcessActivity.this.finish();
             }
-
-
         });
+
+
     }
+
+
+//    private File createFileFromBitmap(Bitmap bitmap) throws IOException {
+//        File newFile = new File(getFilesDir(), makeImageFileName());
+//        FileOutputStream fileOutputStream = new FileOutputStream(newFile);
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+//        fileOutputStream.close();
+//        return newFile;
+//    }
+//
+//    private String makeImageFileName() {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_hhmmss");
+//        Date date = new Date();
+//        String strDate = simpleDateFormat.format(date);
+//        return strDate + ".png";
+//    }
+
+
 
     private Bitmap resizeBitmap(int width, Bitmap bitmap) {
         float bmpWidth = bitmap.getWidth();
