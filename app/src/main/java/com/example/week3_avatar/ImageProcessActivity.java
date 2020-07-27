@@ -196,12 +196,12 @@ public class ImageProcessActivity extends AppCompatActivity {
                     //for mouth
                     final Bitmap lip_raw = BitmapFactory.decodeResource(getResources(), R.drawable.lip);
                     Bitmap lip = resizeBitmap((int) (mouth_size * 1.2), lip_raw);
-                    //canvas.drawBitmap(lip, (float)(mouthLeft_x), (float) (mouthLeft_y-lip.getHeight()*0.35), null);
+                    canvas.drawBitmap(lip, (float)(mouthLeft_x), (float) (mouthLeft_y-lip.getHeight()*0.35), null);
                 } else if (bundle.getInt("연애스타일") == 1) {
                     //mouth2
                     final Bitmap lip_raw2 = BitmapFactory.decodeResource(getResources(), R.drawable.lip2);
                     Bitmap lip2 = resizeBitmap((int) (mouth_size * 1.2), lip_raw2);
-                    //canvas.drawBitmap(lip2, (float)(mouthLeft_x), (float) (mouthLeft_y-lip2.getHeight()*0.3), null);
+                    canvas.drawBitmap(lip2, (float)(mouthLeft_x), (float) (mouthLeft_y-lip2.getHeight()*0.3), null);
                 } else if (bundle.getInt("연애스타일") == 2) {
                     //mouth3
                     final Bitmap lip_raw3 = BitmapFactory.decodeResource(getResources(), R.drawable.lip3);

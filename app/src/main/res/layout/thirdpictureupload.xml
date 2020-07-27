@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/house_background">
 
+    <ImageView
+        android:id="@+id/userImage"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="230dp"
