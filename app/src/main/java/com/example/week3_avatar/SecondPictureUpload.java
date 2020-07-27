@@ -13,7 +13,7 @@ import com.antonionicolaspina.revealtextview.RevealTextView;
 
 public class SecondPictureUpload extends AppCompatActivity implements View.OnClickListener{
     RevealTextView textView;
-    Button leftButton, middleButton, rightButton;
+    Button leftButton, middleButton, rightButton, nextButton;
     Integer section = 0;
 
     final Bundle bundle = new Bundle();
@@ -30,15 +30,14 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
         leftButton = findViewById(R.id.leftButton);
         middleButton = findViewById(R.id.middleButton);
         rightButton = findViewById(R.id.rightButton);
-
+        nextButton = findViewById(R.id.nextButton);
 
         textView.setAnimatedText("너의 머리 스타일에 대해 어떻게 생각해?");
 
         leftButton.setOnClickListener(this);
         middleButton.setOnClickListener(this);
         rightButton.setOnClickListener(this);
-
-
+        nextButton.setOnClickListener(this);
     }
 
     @Override
@@ -198,7 +197,8 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
 
             leftButton.setVisibility(View.INVISIBLE);
             middleButton.setVisibility(View.INVISIBLE);
-            rightButton.setText("");
+            rightButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.VISIBLE);
             textView.setAnimatedText("완벽해! 내가 너의 스타일을 바꾸어 줬어. 집에 가서 거울을 한번 봐 봐!");
             section = 9;
         } else if ((section == 8) && (view.getId() == R.id.middleButton)) {
@@ -207,7 +207,8 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
 
             leftButton.setVisibility(View.INVISIBLE);
             middleButton.setVisibility(View.INVISIBLE);
-            rightButton.setText("");
+            rightButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.VISIBLE);
             textView.setAnimatedText("완벽해! 내가 너의 스타일을 바꾸어 줬어. 집에 가서 거울을 한번 봐 봐!");
             section = 9;
 
@@ -217,11 +218,12 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
 
             leftButton.setVisibility(View.INVISIBLE);
             middleButton.setVisibility(View.INVISIBLE);
-            rightButton.setText("");
+            rightButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.VISIBLE);
             textView.setAnimatedText("완벽해! 내가 너의 스타일을 바꾸어 줬어. 집에 가서 거울을 한번 봐 봐!");
             section = 9;
 
-        } else if ((section == 9) && (view.getId() == R.id.rightButton)) {
+        } else if ((section == 9) && (view.getId() == R.id.nextButton)) {
 //            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> 내가 선택한 색은? >>>>>>>>>>>>" + bundle.getInt("색"));
             Intent intent = new Intent(this, ThirdPictureUpload.class);
             intent.putExtra("myBundle", bundle);
