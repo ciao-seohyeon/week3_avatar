@@ -262,27 +262,15 @@ public class ImageProcessActivity extends AppCompatActivity {
                 final String titleString = titleView.getText().toString();
                 final RequestBody title = RequestBody.create(MultipartBody.FORM, titleString);
 
-                //create a file to write bitmap data
-                File f = new File(getApplicationContext().getCacheDir(), titleString);
+                ////
+                File newFile = new File(getApplicationContext().getCacheDir(), titleString);
+                FileOutputStream fileOutputStream = null;
                 try {
-                    f.createNewFile();
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    tempBitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
-                    byte[] bitmapdata = bos.toByteArray();
-
-                    FileOutputStream fos = null;
-                    try {
-                        fos = new FileOutputStream(f);
-                        fos.write(bitmapdata);
-                        fos.flush();
-                        fos.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
-                    final MultipartBody.Part body = MultipartBody.Part.createFormData("imgFile", f.getName(), reqFile);
+                    fileOutputStream = new FileOutputStream(newFile);
+                    tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                    fileOutputStream.close();
+                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), newFile);
+                    final MultipartBody.Part body = MultipartBody.Part.createFormData("imgFile", newFile.getName(), reqFile);
 
                     new Thread(new Runnable() {
                         @Override
@@ -293,36 +281,78 @@ public class ImageProcessActivity extends AppCompatActivity {
                                 //로그인 하면 id 받아서 방금 업로드 한 파일 이름 포토리스트에 추가
                                 //retrofitClient.addToPhotoList(id,new UserPhoto(savedName)).execute();
                             } catch (IOException e) {
-                                e.printStackTrace(); 
+                                e.printStackTrace();
                             }
                         }
                     }).start();
-                  
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                ////
+                //create a file to write bitmap data
+//                File f = new File(getApplicationContext().getCacheDir(), titleString);
+//
+//                try {
+//                    f.createNewFile();
+//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                    tempBitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
+//                    byte[] bitmapdata = bos.toByteArray();
+//
+//                    FileOutputStream fos = null;
+//                    try {
+//                        fos = new FileOutputStream(f);
+//                        fos.write(bitmapdata);
+//                        fos.flush();
+//                        fos.close();
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
+//                    final MultipartBody.Part body = MultipartBody.Part.createFormData("imgFile", f.getName(), reqFile);
+//
+//                    new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                Response<myFile> response = retrofitClient.uploadFile(body, title).execute();
+//                                String savedName = response.body().getSaveFileName();
+//                                //로그인 하면 id 받아서 방금 업로드 한 파일 이름 포토리스트에 추가
+//                                //retrofitClient.addToPhotoList(id,new UserPhoto(savedName)).execute();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }).start();
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 ImageProcessActivity.this.finish();
             }
         });
 
-
     }
 
 
-//    private File createFileFromBitmap(Bitmap bitmap) throws IOException {
-//        File newFile = new File(getFilesDir(), makeImageFileName());
-//        FileOutputStream fileOutputStream = new FileOutputStream(newFile);
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-//        fileOutputStream.close();
-//        return newFile;
-//    }
-//
-//    private String makeImageFileName() {
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_hhmmss");
-//        Date date = new Date();
-//        String strDate = simpleDateFormat.format(date);
-//        return strDate + ".png";
-//    }
+    private File createFileFromBitmap(Bitmap bitmap) throws IOException {
+        File newFile = new File(getFilesDir(), makeImageFileName());
+        FileOutputStream fileOutputStream = new FileOutputStream(newFile);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+        fileOutputStream.close();
+        return newFile;
+    }
+
+    private String makeImageFileName() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_hhmmss");
+        Date date = new Date();
+        String strDate = simpleDateFormat.format(date);
+        return strDate + ".png";
+    }
 
 
 
