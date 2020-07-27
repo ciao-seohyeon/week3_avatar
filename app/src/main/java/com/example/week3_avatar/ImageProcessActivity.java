@@ -7,8 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
@@ -52,12 +54,11 @@ public class ImageProcessActivity extends AppCompatActivity {
     Bitmap myBitmap;
     Bitmap tempBitmap;
 
+    Uri imageUri;
+
     final IMyService retrofitClient = RetrofitClient.getApiService();
 
-
     Paint rectPaint = new Paint();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +67,19 @@ public class ImageProcessActivity extends AppCompatActivity {
         /////////// get Bundle from other activity ////////////
         Intent intent = getIntent();
         final Bundle bundle = intent.getBundleExtra("myBundle");
+        imageUri = Uri.parse(bundle.getString("uri"));
+        Bitmap myBitmap = null;
+        try {
+            myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         /////////////////////// start ////////////////////////
         imageView = (ImageView) findViewById(R.id.imageView);
         button = (Button) findViewById(R.id.button);
 
-        final Bitmap myBitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.jung);
+//        final Bitmap myBitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.jung);
 
         final Bitmap tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
 

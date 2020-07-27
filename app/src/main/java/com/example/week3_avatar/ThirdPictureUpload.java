@@ -3,6 +3,7 @@ package com.example.week3_avatar;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.antonionicolaspina.revealtextview.RevealTextView;
 
+import retrofit2.http.Url;
+
 public class ThirdPictureUpload extends AppCompatActivity {
     Button rightButton;
     RevealTextView textView;
@@ -25,6 +28,8 @@ public class ThirdPictureUpload extends AppCompatActivity {
     ImageView userImage;
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
+
+    Uri imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +72,12 @@ public class ThirdPictureUpload extends AppCompatActivity {
                         pickImageFromGallery();
                     }
 
+                } else if ((section == 2) && (view.getId() == R.id.rightButton)) {
                     // to next activity
-//                    Intent intent = new Intent(getApplicationContext(), ImageProcessActivity.class);
-//                    intent.putExtra("myBundle", bundle);
-//                    startActivity(intent);
+                    bundle.putString("uri", imageUrl.toString());
+                    Intent intent = new Intent(getApplicationContext(), ImageProcessActivity.class);
+                    intent.putExtra("myBundle", bundle);
+                    startActivity(intent);
                 }
             }
         });
@@ -103,8 +110,11 @@ public class ThirdPictureUpload extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            textView.setAnimatedText("패션 요정이 꾸민 당신의 모습을 보여드립니다.");
+            section = 2;
             // set image to image view
             userImage.setImageURI(data.getData());
+            imageUrl = data.getData();
         }
     }
 }
