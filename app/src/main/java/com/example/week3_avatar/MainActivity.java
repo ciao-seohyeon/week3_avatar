@@ -21,12 +21,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button startBtn, galleryBtn;
 
     private static String data = "hey";
+    String id;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent i = getIntent();
+        id = Objects.requireNonNull(i.getExtras()).getString("id");
 
         startBtn = findViewById(R.id.startButton);
         startBtn.setOnClickListener(this);
@@ -41,16 +45,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.startButton) {
             Intent intent = new Intent(this, Opening.class);
-            Intent i = getIntent();
-            final String id = Objects.requireNonNull(i.getExtras()).getString("id");
             intent.putExtra("id", id);
             startActivity(intent);
         }
 
         if (view.getId() == R.id.galleryButton){
-            Intent i = getIntent();
-            final String id =(i.getExtras()).getString("id");
-
             Intent intent = new Intent(this, Gallery.class);
             intent.putExtra("id", id);
             startActivity(intent);

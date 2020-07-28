@@ -7,10 +7,15 @@
     android:background="@drawable/house_background">
 
     <EditText
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id = "@+id/name"
-        />
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginTop="50dp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:background="@drawable/round_button"
+        android:hint="사진 제목을 입력해주세요"/>
 
     <ImageView
         android:id="@+id/userImage"
@@ -34,7 +39,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="75dp"
             android:layout_marginHorizontal="40dp"
-            android:text="헉...! 너무 멋져...! 친구들에게 자랑하고 싶은걸?"
+            android:text="헉...! 너무 멋져...! 저장해야겠어..!"
             app:rtv_duration="2000"/>
 
         <RelativeLayout

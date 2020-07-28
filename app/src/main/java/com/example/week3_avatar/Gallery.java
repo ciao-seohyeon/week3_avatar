@@ -58,7 +58,6 @@ public class Gallery extends AppCompatActivity {
         retrofitClient = RetrofitClient.getApiService();
 
         recyclerView = findViewById(R.id.recyclerView);
-        swipeRefreshLayout = findViewById(R.id.refresh_layout_fragment2);
         myContext = getApplicationContext();
         mImages = new ArrayList<>();
         mImages_search = new ArrayList<>();
@@ -77,26 +76,31 @@ public class Gallery extends AppCompatActivity {
 
                     final EditText editSearch = findViewById(R.id.editSearch);
 
-                    galleryRecyclerAdapter = new ImageAdapter(myContext, mImages, id);
-                    recyclerView.setAdapter(galleryRecyclerAdapter);
-
-                    linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-
-                    editSearch.addTextChangedListener(new TextWatcher() {
+                    new Handler(getMainLooper()).post(new Runnable() {
                         @Override
-                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        }
+                        public void run() {
+                            galleryRecyclerAdapter = new ImageAdapter(myContext, mImages, id);
+                            recyclerView.setAdapter(galleryRecyclerAdapter);
 
-                        @Override
-                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        }
+                            linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setLayoutManager(linearLayoutManager);
 
-                        @Override
-                        public void afterTextChanged(Editable editable) {
-                            String text = editSearch.getText().toString();
-                            search(text);
+                            editSearch.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable editable) {
+                                    String text = editSearch.getText().toString();
+                                    search(text);
+                                }
+                            });
                         }
                     });
 
