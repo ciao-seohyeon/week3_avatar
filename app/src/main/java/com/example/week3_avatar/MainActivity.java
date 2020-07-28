@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button startBtn;
+    Button startBtn, galleryBtn;
 
     private static String data = "hey";
 
@@ -28,23 +28,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        final String id = Objects.requireNonNull(intent.getExtras()).getString("id");
-
         startBtn = findViewById(R.id.startButton);
         startBtn.setOnClickListener(this);
+
+        galleryBtn = findViewById(R.id.galleryButton);
+        galleryBtn.setOnClickListener(this);
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.startButton) {
             Intent intent = new Intent(this, Opening.class);
+            Intent i = getIntent();
+            final String id = Objects.requireNonNull(i.getExtras()).getString("id");
+            intent.putExtra("id", id);
             startActivity(intent);
         }
 
         if (view.getId() == R.id.galleryButton){
+            Intent i = getIntent();
+            final String id =(i.getExtras()).getString("id");
+
             Intent intent = new Intent(this, Gallery.class);
+            intent.putExtra("id", id);
             startActivity(intent);
         }
 

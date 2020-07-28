@@ -18,10 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.antonionicolaspina.revealtextview.RevealTextView;
 
+import java.util.Objects;
+
 import retrofit2.http.Url;
 
 public class ThirdPictureUpload extends AppCompatActivity {
-    Button rightButton;
+    Button rightButton, galleryButton;
     RevealTextView textView;
     Integer section = 0;
 
@@ -43,9 +45,19 @@ public class ThirdPictureUpload extends AppCompatActivity {
         // get bundle from previous activity
         Intent intent0 = getIntent();
         final Bundle bundle = intent0.getBundleExtra("myBundle");
+        final String id = intent0.getExtras().getString("id");
 
         rightButton = findViewById(R.id.rightButton);
         textView = findViewById(R.id.speechBubble);
+        galleryButton = findViewById(R.id.galleryButton);
+
+        galleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +88,7 @@ public class ThirdPictureUpload extends AppCompatActivity {
                     // to next activity
                     bundle.putString("uri", imageUrl.toString());
                     Intent intent = new Intent(getApplicationContext(), ImageProcessActivity.class);
+                    intent.putExtra("id", id);
                     intent.putExtra("myBundle", bundle);
                     startActivity(intent);
                 }

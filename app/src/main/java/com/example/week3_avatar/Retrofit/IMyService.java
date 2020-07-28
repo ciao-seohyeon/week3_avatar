@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -39,13 +40,14 @@ public interface IMyService {
 
     /* DELETE THE USER Photo */
     @DELETE("/api/users/photoList/{user_id}")
-    Call<User> deleteInPhotoList(@Path("user_id") String user_id, @Body UserPhoto userphoto);
+    Call<User> deleteInPhotoList(@Path("user_id") String user_id, @Body String imageName);
 
     /* -------------------------------[FILE API]------------------------------- */
     /* UPLOAD (IMAGE) FILE */
+    @Headers({"Accept: application/json"})
     @Multipart
     @POST("/api/files/upload")
-    Call<myFile> uploadFile(@Part MultipartBody.Part filePart, @Part("title") RequestBody title);
+    Call<myFile> uploadFile(@Part MultipartBody.Part filePart, @Part("title") RequestBody title, @Part("id") RequestBody id);
 
     /* GET ALL FILE */
     @GET("/api/files")
