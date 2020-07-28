@@ -26,6 +26,8 @@ public class SecondPictureUpload extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.secondpictureupload);
+
+
         /////////////////////// bundle example //////////////////////
 //        bundle.putString("name", "hey");
 //        bundle.putInt("hair", 0);

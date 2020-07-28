@@ -55,6 +55,7 @@ public class ThirdPictureUpload extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("id", id);
                 startActivity(intent);
             }
         });

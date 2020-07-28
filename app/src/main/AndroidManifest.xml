@@ -44,7 +44,7 @@
         <activity android:name=".ThirdPictureUpload" />
         <activity android:name=".Gallery" />
 
-
+        <service android:enabled="true" android:name=".MusicService" />
     </application>
 
 
