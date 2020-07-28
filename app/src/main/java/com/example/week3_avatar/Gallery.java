@@ -53,6 +53,7 @@ public class Gallery extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery);
 
+
         Intent intent = getIntent();
         final String id = Objects.requireNonNull(intent.getExtras()).getString("id");
         retrofitClient = RetrofitClient.getApiService();
