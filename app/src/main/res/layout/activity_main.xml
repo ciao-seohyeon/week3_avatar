@@ -4,21 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/logo_background"
     tools:context=".MainActivity">
+    <ImageView
+        android:layout_width="292dp"
+        android:layout_height="84dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="60dp"
+        android:layout_above="@id/button"
+        android:src="@drawable/logo_horizontal" />
 
-
-    <Button
-        android:id="@+id/startButton"
+    <LinearLayout
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start"/>
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="60dp">
 
-    <Button
-        android:id="@+id/galleryButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/startButton"
-        android:text="Gallery"/>
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_semibackground"
+            android:text="Start"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            />
+
+        <Button
+            android:id="@+id/galleryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startButton"
+            android:text="History"
+            android:background="@drawable/login_semibackground"
+            />
+
+    </LinearLayout>
+
 
 
 </RelativeLayout>
