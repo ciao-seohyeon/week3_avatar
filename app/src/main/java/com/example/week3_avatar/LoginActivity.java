@@ -42,9 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Intent svc=new Intent(this, MusicService.class);
-        startService(svc);
-
         final IMyService retrofitClient = RetrofitClient.getApiService();
 
         edt_login_email = findViewById(R.id.edt_email);
