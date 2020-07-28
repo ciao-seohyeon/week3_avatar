@@ -41,7 +41,6 @@ public class ThirdPictureUpload extends AppCompatActivity {
         // upload image
         userImage = findViewById(R.id.userImage);
 
-
         // get bundle from previous activity
         Intent intent0 = getIntent();
         final Bundle bundle = intent0.getBundleExtra("myBundle");
