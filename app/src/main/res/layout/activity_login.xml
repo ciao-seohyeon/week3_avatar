@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/logo_background"
     tools:context=".LoginActivity">
 
-        <LinearLayout
+    <ImageView
+        android:layout_width="292dp"
+        android:layout_height="84dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/logo_horizontal" />
+
+    <LinearLayout
+            android:id="@+id/login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_semibackground"
             android:orientation="vertical"
-            android:padding="20dp"
-            tools:layout_editor_absoluteX="204dp"
-            tools:layout_editor_absoluteY="188dp">
+            android:layout_margin="40dp"
+            android:layout_centerInParent="true">
 
             <Space
                 android:layout_width="match_parent"
@@ -61,7 +69,7 @@
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="223dp"
-                android:layout_height="31dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="30dp"
                 android:text="Log in"
@@ -82,6 +90,13 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="27dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="46dp" />
         </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
